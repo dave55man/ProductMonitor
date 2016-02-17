@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Trek.ProductMonitor.Model.DataAccess.Contracts
 {
-    public class Class1
+    interface IProductionUpdateConsumer
     {
     }
 }
