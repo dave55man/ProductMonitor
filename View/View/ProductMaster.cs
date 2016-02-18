@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProductMonitor
+namespace Trek.ProductMonitor.View.View
 {
-    public partial class Form1 : Form
+    public partial class ProductMaster : Form
     {
-        public Form1()
+        public ProductMaster()
         {
             InitializeComponent();
+        }
+
+        private void ProductMaster_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

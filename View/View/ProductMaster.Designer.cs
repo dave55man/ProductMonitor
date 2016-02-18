@@ -1,6 +1,6 @@
-﻿namespace Trek.ProductMonitor.View
+﻿namespace Trek.ProductMonitor.View.View
 {
-    partial class Form1
+    partial class ProductMaster
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // ProductMaster
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(801, 481);
+            this.Name = "ProductMaster";
+            this.Text = "Product Master";
+            this.Load += new System.EventHandler(this.ProductMaster_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-
