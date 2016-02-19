@@ -17,6 +17,7 @@ namespace Trek.ProductMonitor.View
         {
             container.Configure(_ => {
                 _.For<IVendorDao>().Use<VendorDao>();
+                _.For<IProductUpdateDao>().Use<ProductUpdateDao>();
                 _.For<IVendorService>().Use<VendorService>();
                 _.For<IProductUpdateService>().Use<ProductUpdateService>();
             });

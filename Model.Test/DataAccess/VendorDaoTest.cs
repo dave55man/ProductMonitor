@@ -21,42 +21,47 @@ namespace Model.Test.DataAccess
             Assert.That(results, Is.Not.Empty);
 
             //Assert Trek exists
-            Assert.That(results.Any(r => r.Code == "TRK" && r.Name == "Trek"));
+            Assert.That(results.Any(r => r.Code == "TRK" && r.Name == "Trek Bicycle Corp" && r.Description == "Best bike company in the world"));
         }
 
         [Test]
-        public void ValidGetVendorProductsTest()
+        public void ValidGetUpdatedVendorProductTest()
         {
-            var testKeys = new HashSet<string> { "Product_Test", "Product_Test2" };
+            var testUpdate = new ProductUpdate
+            {
+                VendorCode = "TRK",
+                ProductId = "00002d4b-224c-49d1-8d6a-ef21ad7111e2"
+            };
 
-            IEnumerable<VendorProduct> results = null;
-            Assert.DoesNotThrow(() => results = _testDao.GetVendorProductsByKeys("TRK", testKeys));
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results, Is.Not.Empty);
-
-            //Assert some basic information (once we find out stuff)
+            VendorProduct result = null;
+            Assert.DoesNotThrow(() => result = _testDao.GetUpdatedVendorProduct(testUpdate));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.VendorCode, Is.EqualTo("TRK"));
+            Assert.That(result.Description, Is.EqualTo("Cool TRK product"));
         }
 
         [Test]
-        public void InvalidGetVendorProductsTest()
+        public void InvalidGetUpdatedVendorProductTest()
         {
-            //Test out invalid keys
-            var invalidKeys = new HashSet<string> { "Product_Test", "Product_Test2" };
+            //Test out an invalid product id
+            var invalidProduct1 = new ProductUpdate
+            {
+                VendorCode = "TRK",
+                ProductId = "Test"
+            };
+            VendorProduct result = null;
+            Assert.DoesNotThrow(() => result = _testDao.GetUpdatedVendorProduct(invalidProduct1));
+            Assert.That(result, Is.Null);
 
-            IEnumerable<VendorProduct> results = null;
-            Assert.DoesNotThrow(() => results = _testDao.GetVendorProductsByKeys("TRK", invalidKeys));
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results, Is.Empty);
-
-            //Test out invalid vendor code
-            var validKeys = new HashSet<string> { "Product_Test" };
-
-            results = null;
-            Assert.DoesNotThrow(() => results = _testDao.GetVendorProductsByKeys("ZZZ", validKeys));
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results, Is.Empty);
-
-            //Note: Not worried about null keys or vendor codes as this is only called internally
+            //Test out an invalid vendor code
+            var invalidProduct2 = new ProductUpdate
+            {
+                VendorCode = "ZZZ",
+                ProductId = "00002d4b-224c-49d1-8d6a-ef21ad7111e2"
+            };
+            result = null;
+            Assert.DoesNotThrow(() => result = _testDao.GetUpdatedVendorProduct(invalidProduct2));
+            Assert.That(result, Is.Null);
         }
     }
 }

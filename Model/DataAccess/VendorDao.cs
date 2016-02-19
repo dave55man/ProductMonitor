@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using System.Collections.Generic;
 using System.Linq;
 using Trek.ProductMonitor.Model.DataAccess.Contracts;
 using Trek.ProductMonitor.Model.Domain;
@@ -8,23 +9,23 @@ namespace Trek.ProductMonitor.Model.DataAccess
     public class VendorDao : IVendorDao
     {
         /// <summary>
-        /// Returns a list of vendors from Azure
+        /// Retrieves the updated Vendor Product from the database
         /// </summary>
-        /// <returns></returns>
-        public IEnumerable<VendorProduct> GetVendorProductsByKeys(string vendorCode, HashSet<string> rowKeys)
+        /// <param name="update"></param>
+        /// <returns>Will return null if the product is not found</returns>
+        public VendorProduct GetUpdatedVendorProduct(ProductUpdate update)
         {
-            return DataSources.TrekVendorData.CreateQuery<VendorProduct>().Where(VendorProduct => VendorProduct.PartitionKey == vendorCode
-                && rowKeys.Contains(VendorProduct.RowKey));
+            var operation = TableOperation.Retrieve<VendorProduct>(update.VendorCode, update.ProductRowKey);
+            return DataSources.VendorData.Execute(operation).Result as VendorProduct;
         }
 
         /// <summary>
-        /// Returns a list of Vendor Products given their IDs
+        /// Returns a list of vendors from the database
         /// </summary>
-        /// <param name="ids"></param>
         /// <returns></returns>
         public IEnumerable<Vendor> GetVendors()
         {
-            return DataSources.TrekVendorData.CreateQuery<Vendor>().Where(Vendor => Vendor.PartitionKey == Codes.Strings.Vendor);
+            return DataSources.VendorData.CreateQuery<Vendor>().Where(v => v.PartitionKey == Codes.Strings.Vendor);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Configuration;
 
@@ -6,13 +7,24 @@ namespace Trek.ProductMonitor.Model.DataAccess
 {
     public static class DataSources
     {
-        public static CloudTable TrekVendorData
+        private static CloudStorageAccount _storageAccount
+        {
+            get { return CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]); }
+        }
+
+        public static CloudTable VendorData
         {
             get
             {
-                var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
-                var client = storageAccount.CreateCloudTableClient();
-                return client.GetTableReference("VendorData");
+                return _storageAccount.CreateCloudTableClient().GetTableReference("VendorData");
+            }
+        }
+
+        public static CloudQueue ProductUpdates
+        {
+            get
+            {
+                return _storageAccount.CreateCloudQueueClient().GetQueueReference("productupdates");
             }
         }
     }
