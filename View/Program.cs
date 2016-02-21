@@ -1,12 +1,8 @@
 ﻿using Bootstrap;
 using Bootstrap.StructureMap;
-using StructureMap;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Trek.ProductMonitor.View.View;
 
 namespace Trek.ProductMonitor.View
 {
@@ -20,12 +16,17 @@ namespace Trek.ProductMonitor.View
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
 
+            //Setup IOC via Bootstrapper and StructureMap
             Bootstrapper.With.StructureMap().Start();
 
-            //TODO: Hookup the presenter here!
-            throw new NotImplementedException();
+            //Start the Product Master View!
+            Application.Run(new ProductMaster());
+        }
+
+        public static void Exit()
+        {
+            Application.Exit();
         }
     }
 }

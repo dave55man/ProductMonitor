@@ -1,35 +1,94 @@
-﻿using System;
+﻿using Bootstrap;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Trek.ProductMonitor.Model.Domain;
+using Trek.ProductMonitor.View.Contracts;
+using Trek.ProductMonitor.View.Model;
+using Trek.ProductMonitor.View.Presenter;
 
 namespace Trek.ProductMonitor.View.View
 {
-    public partial class ProductMaster : Form
+    public partial class ProductMaster : Form, IProductMaster
     {
+        private BindingSource _productUpdates;
+        private ProductMasterPresenter _presenter;
+
+        /// <summary>
+        /// Get's the currently Selected Vendor
+        /// </summary>
+        public Vendor SelectedVendor
+        {
+            get { return VendorBox.SelectedItem as Vendor; }
+        }
+
+        //Public Event Handlers
+        public event EventHandler<EventArgs> VendorSelectedEvent;
+        public event EventHandler<EventArgs> ClearEvent;
+        public event EventHandler<EventArgs> ExitEvent;
+
         public ProductMaster()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Sets up the Vendor ListBox
+        /// </summary>
+        /// <param name="vendors"></param>
+        public void SetVendors(IEnumerable<Vendor> vendors)
+        {
+            VendorBox.DataSource = vendors.ToList();
+            VendorBox.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Adds a Product Update to the ProductUpdateGrid
+        /// </summary>
+        /// <param name="update"></param>
+        public void AddProductUpdate(ProductUpdateModel update)
+        {
+            //The list of Product Updates can be no longer than 50
+            if(_productUpdates.List.Count == 50)
+            {
+                _productUpdates.List.RemoveAt(0);
+            }
+
+            //Add to the top of the list
+            _productUpdates.List.Insert(0, update);
+        }
+
+        /// <summary>
+        /// Clears the Product Update Grid
+        /// </summary>
+        public void ClearProductUpdates()
+        {
+            _productUpdates.Clear();
+        }
+
         private void ProductMaster_Load(object sender, EventArgs e)
         {
+            _productUpdates = ProductUpdateGrid.DataSource as BindingSource;
 
+            //Resolve the Present upon load
+            Bootstrapper.ContainerExtension.Register<IProductMaster>(this);
+            _presenter = Bootstrapper.ContainerExtension.Resolve<ProductMasterPresenter>();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void VendorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (VendorSelectedEvent != null) VendorSelectedEvent(this, e);
         }
 
-        private void ProductUpdateGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void ClearButton_Click(object sender, EventArgs e)
         {
+            if (ClearEvent != null) ClearEvent(this, EventArgs.Empty);
+        }
 
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            if (ExitEvent != null) ExitEvent(this, EventArgs.Empty);
         }
     }
 }
