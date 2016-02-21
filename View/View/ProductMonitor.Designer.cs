@@ -1,6 +1,6 @@
 ﻿namespace Trek.ProductMonitor.View.View
 {
-    partial class ProductMaster
+    partial class ProductMonitor
     {
         /// <summary>
         /// Required designer variable.
@@ -35,13 +35,13 @@
             this.ClearButton = new System.Windows.Forms.Button();
             this.VendorLabel = new System.Windows.Forms.Label();
             this.ProductUpdateGrid = new System.Windows.Forms.DataGridView();
-            this.productUpdateModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.vendorBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.vendorProductBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Vendor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productUpdateModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.vendorBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.vendorProductBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ProductUpdateGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productUpdateModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vendorBindingSource)).BeginInit();
@@ -123,18 +123,6 @@
             this.ProductUpdateGrid.Size = new System.Drawing.Size(656, 439);
             this.ProductUpdateGrid.TabIndex = 8;
             // 
-            // productUpdateModelBindingSource
-            // 
-            this.productUpdateModelBindingSource.DataSource = typeof(Trek.ProductMonitor.View.Model.ProductUpdateModel);
-            // 
-            // vendorBindingSource
-            // 
-            this.vendorBindingSource.DataSource = typeof(Trek.ProductMonitor.Model.Domain.Vendor);
-            // 
-            // vendorProductBindingSource
-            // 
-            this.vendorProductBindingSource.DataSource = typeof(Trek.ProductMonitor.Model.Domain.VendorProduct);
-            // 
             // Vendor
             // 
             this.Vendor.DataPropertyName = "Vendor";
@@ -166,7 +154,19 @@
             this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
             this.priceDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // ProductMaster
+            // productUpdateModelBindingSource
+            // 
+            this.productUpdateModelBindingSource.DataSource = typeof(Trek.ProductMonitor.View.Model.ProductUpdateModel);
+            // 
+            // vendorBindingSource
+            // 
+            this.vendorBindingSource.DataSource = typeof(Trek.ProductMonitor.Model.Domain.Vendor);
+            // 
+            // vendorProductBindingSource
+            // 
+            this.vendorProductBindingSource.DataSource = typeof(Trek.ProductMonitor.Model.Domain.VendorProduct);
+            // 
+            // ProductMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -178,9 +178,9 @@
             this.Controls.Add(this.ProductUpdateLabel);
             this.Controls.Add(this.VendorBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "ProductMaster";
-            this.Text = "Product Master";
-            this.Load += new System.EventHandler(this.ProductMaster_Load);
+            this.Name = "ProductMonitor";
+            this.Text = "Product Monitor";
+            this.Load += new System.EventHandler(this.ProductMonitor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ProductUpdateGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productUpdateModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vendorBindingSource)).EndInit();

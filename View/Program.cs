@@ -20,8 +20,8 @@ namespace Trek.ProductMonitor.View
             //Setup IOC via Bootstrapper and StructureMap
             Bootstrapper.With.StructureMap().Start();
 
-            //Start the Product Master View!
-            Application.Run(new ProductMaster());
+            //Start the Product Monitor!
+            Application.Run(new View.ProductMonitor());
         }
 
         public static void Exit()

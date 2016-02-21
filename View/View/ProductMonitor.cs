@@ -10,10 +10,10 @@ using Trek.ProductMonitor.View.Presenter;
 
 namespace Trek.ProductMonitor.View.View
 {
-    public partial class ProductMaster : Form, IProductMaster
+    public partial class ProductMonitor : Form, IProductMonitor
     {
         private BindingSource _productUpdates;
-        private ProductMasterPresenter _presenter;
+        private ProductMonitorPresenter _presenter;
 
         /// <summary>
         /// Get's the currently Selected Vendor
@@ -28,7 +28,7 @@ namespace Trek.ProductMonitor.View.View
         public event EventHandler<EventArgs> ClearEvent;
         public event EventHandler<EventArgs> ExitEvent;
 
-        public ProductMaster()
+        public ProductMonitor()
         {
             InitializeComponent();
         }
@@ -67,13 +67,13 @@ namespace Trek.ProductMonitor.View.View
             _productUpdates.Clear();
         }
 
-        private void ProductMaster_Load(object sender, EventArgs e)
+        private void ProductMonitor_Load(object sender, EventArgs e)
         {
             _productUpdates = ProductUpdateGrid.DataSource as BindingSource;
 
             //Resolve the Present upon load
-            Bootstrapper.ContainerExtension.Register<IProductMaster>(this);
-            _presenter = Bootstrapper.ContainerExtension.Resolve<ProductMasterPresenter>();
+            Bootstrapper.ContainerExtension.Register<IProductMonitor>(this);
+            _presenter = Bootstrapper.ContainerExtension.Resolve<ProductMonitorPresenter>();
         }
 
         private void VendorBox_SelectedIndexChanged(object sender, EventArgs e)

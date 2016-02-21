@@ -6,15 +6,15 @@ using Trek.ProductMonitor.View.Model;
 
 namespace Trek.ProductMonitor.View.Presenter
 {
-    public class ProductMasterPresenter : IDisposable
+    public class ProductMonitorPresenter : IDisposable
     {
-        private readonly IProductMaster _view;
+        private readonly IProductMonitor _view;
         private readonly IVendorService _vendorService;
         private readonly IProductUpdateService _productUpdateService;
 
         private Timer _timer;
 
-        public ProductMasterPresenter(IProductMaster view, IVendorService vendorService, IProductUpdateService productUpdateService)
+        public ProductMonitorPresenter(IProductMonitor view, IVendorService vendorService, IProductUpdateService productUpdateService)
         {
             _view = view;
             _vendorService = vendorService;

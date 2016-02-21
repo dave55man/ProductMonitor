@@ -5,7 +5,7 @@ using Trek.ProductMonitor.View.Model;
 
 namespace Trek.ProductMonitor.View.Contracts
 {
-    public interface IProductMaster
+    public interface IProductMonitor
     {
         Vendor SelectedVendor { get; }
 

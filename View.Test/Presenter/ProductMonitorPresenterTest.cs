@@ -11,12 +11,12 @@ using Trek.ProductMonitor.View.Presenter;
 namespace View.Test.Presenter
 {
     [TestFixture]
-    public class ProductMasterPresenterTest
+    public class ProductMonitorPresenterTest
     {
         private readonly IProductUpdateService _moqProductUpdateService = MockRepository.GenerateMock<IProductUpdateService>();
         private readonly IVendorService _moqVendorService = MockRepository.GenerateMock<IVendorService>();
-        private IProductMaster _moqProductMaster;
-        private ProductMasterPresenter _testPresenter;
+        private IProductMonitor _moqProductMonitor;
+        private ProductMonitorPresenter _testPresenter;
 
         private readonly Vendor _stubVendor = MockRepository.GenerateStub<Vendor>();
 
@@ -32,10 +32,10 @@ namespace View.Test.Presenter
         [SetUp]
         public void PreTest()
         {
-            _moqProductMaster = MockRepository.GenerateMock<IProductMaster>();
-            _moqProductMaster.Stub(x => x.SelectedVendor).Return(_stubVendor).Repeat.Any();
+            _moqProductMonitor = MockRepository.GenerateMock<IProductMonitor>();
+            _moqProductMonitor.Stub(x => x.SelectedVendor).Return(_stubVendor).Repeat.Any();
 
-            _testPresenter = new ProductMasterPresenter(_moqProductMaster, _moqVendorService, _moqProductUpdateService);
+            _testPresenter = new ProductMonitorPresenter(_moqProductMonitor, _moqVendorService, _moqProductUpdateService);
         }
 
         [TearDown]
@@ -48,20 +48,20 @@ namespace View.Test.Presenter
         public void SelectVendorTest()
         {
             //Raise the Vendor Selected Event
-            _moqProductMaster.Raise(r => r.VendorSelectedEvent += null, _moqProductMaster, EventArgs.Empty);
+            _moqProductMonitor.Raise(r => r.VendorSelectedEvent += null, _moqProductMonitor, EventArgs.Empty);
 
             //Make sure the list was cleared...
-            _moqProductMaster.AssertWasCalled(x => x.ClearProductUpdates(), options => options.Repeat.Once());
+            _moqProductMonitor.AssertWasCalled(x => x.ClearProductUpdates(), options => options.Repeat.Once());
         }
 
         [Test]
         public void ClearButtonTest()
         {
             //Raise the Vendor Selected Event
-            _moqProductMaster.Raise(r => r.ClearEvent += null, _moqProductMaster, EventArgs.Empty);
+            _moqProductMonitor.Raise(r => r.ClearEvent += null, _moqProductMonitor, EventArgs.Empty);
 
             //Make sure the list was cleared...
-            _moqProductMaster.AssertWasCalled(x => x.ClearProductUpdates(), options => options.Repeat.Once());
+            _moqProductMonitor.AssertWasCalled(x => x.ClearProductUpdates(), options => options.Repeat.Once());
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace View.Test.Presenter
 
             //Assert that everything was updated correctly!
             _moqProductUpdateService.AssertWasCalled(x => x.GetLatestProductUpdatesForVendor(_stubVendor.Code), options => options.Repeat.Twice());
-            _moqProductMaster.AssertWasCalled(x => x.AddProductUpdate(Arg<ProductUpdateModel>.Matches(pu =>
+            _moqProductMonitor.AssertWasCalled(x => x.AddProductUpdate(Arg<ProductUpdateModel>.Matches(pu =>
                 pu.Name == "Test" &&
                 pu.Price == "$3.50" &&
                 pu.Description == "Test Test" &&
